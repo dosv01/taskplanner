@@ -1,0 +1,95 @@
+<div class="container-fluid">
+
+    <div class="row ">
+        <app-navbar></app-navbar>
+    </div>
+
+    <div class="row row-buffer">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <span>Task</span>
+                </div>
+                <div class="card-body">
+                    <form (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" [(ngModel)]="task.description" name="description" />
+                        </div>
+                        <div class="form-group">
+                            <label>D-</label>
+                            <input type="number" class="form-control" [(ngModel)]="task.days" name="days" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Group</label>
+                            <select class="form-control" name="group" id="group" [(ngModel)]="task.group.description">
+                                <option [value]="group.description" *ngFor="let group of groups | async">
+                                    {{group.description}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Responsible</label>
+                            <select class="form-control" name="responsible" id="responsible"
+                                [(ngModel)]="task.teamwork.description">
+                                <option [value]="teamwork.description" *ngFor="let teamwork of teamworks | async">
+                                    {{teamwork.description}}</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-edit">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">D-</th>
+                            <th scope="col">Responsible</th>
+                            <th scope="col">Group</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let task of tasks | async; let i = index">
+                        <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <th scope="row">
+                                <input type="text" class="form-control" [(ngModel)]="task.description"
+                                    name="description" />
+                            </th>
+                            <th scope="row">
+                                <input type="text" class="form-control" [(ngModel)]="task.days" name="days" />
+                            </th>
+                            <th scope="row">
+                                {{task.teamwork.description}}
+                            </th>
+                            <th scope="row">
+                                {{task.group.description}}
+                            </th>
+                            <th scope="row">
+                                <button type="button" class="btn btn-default"
+                                    (click)="edit(task, task.key)">Edit</button>
+                            </th>
+                            <th scope="row">
+                                <button type="button" class="btn btn-danger ml-2"
+                                    (click)="delete(task.key)">Delete</button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

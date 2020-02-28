@@ -1,0 +1,74 @@
+<div class="container-fluid">
+
+    <div class="row ">
+        <app-navbar></app-navbar>
+    </div>
+
+    <div class="row row-buffer">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <span>Planning Detail</span>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-3">
+                        <label>Name: </label> {{this.planning.name}}
+                    </div>
+                    <div class="col-md-3">
+                        <label>Responsible: </label> {{this.planning.responsible}}
+                    </div>
+                    <div class="col-md-3">
+                        <label>Planning Date: </label> {{this.datePipe.transform(planning.planningDate, 'dd/MM/yyyy')}}
+                    </div>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row row-edit">
+
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Execution Date</th>
+                            <th scope="col">Teamwork</th>
+                            <th scope="col">Done</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let task of planning.tasks; let i = index">
+                        <tr [ngClass]="lineStatus(task.executionDate, task.status)">
+                            <th scope="row">
+                                {{i+1}}
+                            </th>
+                            <th scope="row">
+                                {{task.description}}
+                            </th>
+                            <th scope="row">
+                                {{this.datePipe.transform(task.executionDate, 'dd/MM/yyyy')}}
+                            </th>
+                            <th scope="row">
+                                {{task.teamwork.description}}
+                            </th>
+                            <th scope="row">
+                                <label class="switch">
+                                    <input type="checkbox" [checked]="task.status"
+                                        (change)="isChangeStatus($event.target.checked, i)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
